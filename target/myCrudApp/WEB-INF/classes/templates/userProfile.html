@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Profile</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+<h1>User Profile</h1>
+<table>
+    <tr>
+        <th>ID</th>
+        <td th:text="${user.id}"></td>
+    </tr>
+    <tr>
+        <th>Username</th>
+        <td th:text="${user.username}"></td>
+    </tr>
+    <tr>
+        <th>Name</th>
+        <td th:text="${user.name}"></td>
+    </tr>
+    <tr>
+        <th>Surname</th>
+        <td th:text="${user.surname}"></td>
+    </tr>
+    <tr>
+        <th>Phone Number</th>
+        <td th:text="${user.phoneNumber}"></td>
+    </tr>
+    <tr>
+        <th>Roles</th>
+        <td>
+            <ul>
+                <li th:each="role : ${user.roles}" th:text="${role.name}"></li>
+            </ul>
+        </td>
+    </tr>
+</table>
+<a href="/logout">Logout</a>
+</body>
+</html>

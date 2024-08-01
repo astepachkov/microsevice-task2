@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Profile</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+<h1>User Profile</h1>
+<table>
+    <tr>
+        <th>Ваш ID</th>
+        <td th:text="${user.id}"></td>
+    </tr>
+    <tr>
+        <th>Имя пользователя</th>
+        <td th:text="${user.username}"></td>
+    </tr>
+    <tr>
+        <th>Имя</th>
+        <td th:text="${user.name}"></td>
+    </tr>
+    <tr>
+        <th>Фамилия</th>
+        <td th:text="${user.surname}"></td>
+    </tr>
+    <tr>
+        <th>Телефон</th>
+        <td th:text="${user.phoneNumber}"></td>
+    </tr>
+    <tr>
+        <th>Ваши права доступа</th>
+        <td>
+            <ul>
+                <li th:each="role : ${user.roles}" th:text="${role.name}"></li>
+            </ul>
+        </td>
+    </tr>
+</table>
+<form th:action="@{/logout}" method="post" style="display:inline;">
+    <button type="submit" class="btn btn-primary">Выйти</button>
+</form>
+<form th:action="@{/user/edit}" method="get" style="display:inline;">
+    <button type="submit" class="btn btn-primary">Редактировать</button>
+</form>
+
+</body>
+</html>

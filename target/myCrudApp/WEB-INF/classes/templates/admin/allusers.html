@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Users list</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #a99eff;
+        }
+    </style>
+    <script>
+        function editUser(id) {
+            window.location.href = '/admin/edit/' + id;
+        }
+    </script>
+</head>
+<body>
+    <h1>All users</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Phone number</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="user : ${users}">
+                <td th:text="${user.id}"></td>
+                <td th:text="${user.name}"></td>
+                <td th:text="${user.surname}"></td>
+                <td th:text="${user.phoneNumber}"></td>
+                <td>
+                    <form th:action="@{/admin/delete}" method="post" style="display:inline;">
+                        <input type="hidden" name="id" th:value="${user.id}">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                    <button th:onclick="'editUser(' + ${user.id} + ')'" class="btn btn-primary">Edit</button>
+
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+
+  <button onclick="window.location.href='/admin/new'" class="btn btn-primary">New user</button>
+
+</body>
+</html>
