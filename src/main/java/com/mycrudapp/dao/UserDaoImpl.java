@@ -4,12 +4,9 @@ import com.mycrudapp.entity.Role;
 import com.mycrudapp.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Repository
@@ -66,50 +63,6 @@ public class UserDaoImpl implements UserDao {
             }
             entityManager.merge(existingUser);
         }
-    }
-
-    @Override
-    public List<User> getUserByPhone(String phone) {
-        List<User> users = entityManager.createQuery("SELECT u FROM User u WHERE u.phoneNumber = :phone", User.class)
-                .setParameter("phone", phone)
-                .getResultList();
-
-        if (users.isEmpty()) {
-            System.out.println("Пользователи с номером " + phone + " не найдены");
-        }
-
-        return users;
-    }
-
-    @Override
-    public List<User> getUserBySurname(String surname) {
-        TypedQuery<User> typedQuery = entityManager.createQuery("from User user where user.surname = :surname", User.class);
-        typedQuery.setParameter("surname", surname);
-        List<User> users = typedQuery.getResultList();
-        if (users.isEmpty()) {
-            System.out.println("Пользователи с фамилией " + surname + " не найдены");
-            return Collections.emptyList();
-        } else return users;
-    }
-
-    @Override
-    public List<Role> getUserRoles(int userId) {
-        User user = entityManager.find(User.class, userId);
-        return new ArrayList<>(user.getRoles());
-    }
-
-    @Override
-    public void addRoleToUser(int userId, Role role) {
-        User user = entityManager.find(User.class, userId);
-        user.getRoles().add(role);
-        entityManager.merge(user);
-    }
-
-    @Override
-    public void removeRoleFromUser(int userId, Role role) {
-        User user = entityManager.find(User.class, userId);
-        user.getRoles().remove(role);
-        entityManager.merge(user);
     }
 
     @Override

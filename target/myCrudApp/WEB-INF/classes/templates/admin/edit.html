@@ -2,19 +2,33 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Edit User</title>
+    <title>Редактирование данных пользователя</title>
 </head>
 <body>
 <h1>Edit User</h1>
 <form th:action="@{/admin/update/{id}(id=${user.id})}" th:object="${user}" method="post">
     <input type="hidden" th:field="*{id}">
-    <label for="name">Name:</label>
+    <label for="name">Имя:</label>
     <input type="text" id="name" th:field="*{name}" required><br>
-    <label for="surname">Surname:</label>
+    <label for="surname">Фамилия:</label>
     <input type="text" id="surname" th:field="*{surname}" required><br>
-    <label for="phoneNumber">Phone Number:</label>
+    <label for="phoneNumber">Телефон:</label>
     <input type="text" id="phoneNumber" th:field="*{phoneNumber}" required><br>
-    <button type="submit">Update</button>
+    <label for="username">Имя пользователя:</label>
+    <input type="text" id="username" th:field="*{username}" required><br>
+    <label for="password">Пароль:</label>
+    <input type="password" id="password" th:field="*{password}"><br>
+
+    <label for="roles">Права доступа:</label>
+    <select id="roles" name="roles" multiple required>
+        <option th:each="role : ${allRoles}"
+                th:value="${role.id}"
+                th:text="${role.name}"
+                th:selected="${user.roles.contains(role)}">
+        </option>
+    </select><br>
+
+    <button type="submit">Сохранить</button>
 </form>
 </body>
 </html>

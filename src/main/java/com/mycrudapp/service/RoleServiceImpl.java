@@ -11,15 +11,11 @@ import java.util.Set;
 @Service
 public class RoleServiceImpl implements RoleService {
 
-    private RoleDao roleDao;
+    private final RoleDao roleDao;
+
     @Autowired
     public RoleServiceImpl(RoleDao roleDao) {
         this.roleDao = roleDao;
-    }
-
-    @Override
-    public Role findByName(String name) {
-        return roleDao.findByName(name);
     }
 
     @Override
@@ -27,15 +23,6 @@ public class RoleServiceImpl implements RoleService {
         return roleDao.getAllRoles();
     }
 
-    @Override
-    public void saveRole(Role role) {
-        roleDao.saveRole(role);
-    }
-
-    @Override
-    public void deleteRole(Role role) {
-        roleDao.deleteRole(role);
-    }
 
     @Override
     public Set<Role> getRolesByIds(List<Long> roleIds) {

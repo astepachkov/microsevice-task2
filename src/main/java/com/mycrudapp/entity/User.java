@@ -96,7 +96,7 @@ public class User implements UserDetails {
         return "Пользователь: " +
                 " id в таблице = " + id +
                 " USERNAME = " + username +
-                " имя = " + name  +
+                " имя = " + name +
                 " фамилия = " + surname +
                 " номер телефона = " + phoneNumber +
                 " роли = " + roles;
