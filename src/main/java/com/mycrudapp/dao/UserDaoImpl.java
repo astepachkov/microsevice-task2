@@ -4,6 +4,7 @@ import com.mycrudapp.entity.Role;
 import com.mycrudapp.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -22,7 +23,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public void deleteUser(int id) {
         User user = entityManager.find(User.class, id);
-        if (user!= null) {
+        if (user != null) {
             Query query = entityManager.createNativeQuery("DELETE FROM user_roles WHERE user_id = ?");
             query.setParameter(1, id);
             query.executeUpdate();
@@ -30,12 +31,12 @@ public class UserDaoImpl implements UserDao {
         }
 
     }
+
     @Override
     public void addUser(User user) {
-            entityManager.persist(user);
-            for (Role role : user.getRoles()) {
-                entityManager.merge(role);
-            }
+        entityManager.persist(user);
+        entityManager.flush();
+        entityManager.refresh(user);
     }
 
     @Override

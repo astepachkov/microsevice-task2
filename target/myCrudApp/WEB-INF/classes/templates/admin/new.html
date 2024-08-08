@@ -2,35 +2,83 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Добавление нового польщователя</title>
+    <title>Добавление нового пользователя</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f8f9fa;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-    <h1>Заполните все поля:</h1>
-    <form th:action="@{/admin/add}" th:object="${user}" method="post">
-        <label for="name">Введите имя:</label>
-        <input type="text" id="name" th:field="*{name}" required><br>
+<div th:if="${errorMessage}" style="color: red; margin-bottom: 15px;">
+    <p th:text="${errorMessage}"></p>
+</div>
+<h1>Заполните все поля:</h1>
+<form th:action="@{/admin/add}" th:object="${user}" method="post">
+    <label for="name">Введите имя:</label>
+    <input type="text" id="name" th:field="*{name}" required><br>
 
-        <label for="surname">Введите Фамилию:</label>
-        <input type="text" id="surname" th:field="*{surname}" required><br>
+    <label for="surname">Введите Фамилию:</label>
+    <input type="text" id="surname" th:field="*{surname}" required><br>
 
-        <label for="phoneNumber">Введите номер телефона:</label>
-        <input type="text" id="phoneNumber" th:field="*{phoneNumber}" required><br>
+    <label for="phoneNumber">Введите номер телефона:</label>
+    <input type="text" id="phoneNumber" th:field="*{phoneNumber}" required><br>
 
-        <label for="username">Введите имя пользователя:</label>
-        <input type="text" id="username" th:field="*{username}" required><br>
+    <label for="username">Введите имя пользователя:</label>
+    <input type="text" id="username" th:field="*{username}" required><br>
 
-        <label for="password">Введите пароль:</label>
-        <input type="password" id="password" th:field="*{password}" required><br>
+    <label for="password">Введите пароль:</label>
+    <input type="password" id="password" th:field="*{password}" required><br>
 
-        <label for="roles">Выберите права доступа:</label>
-        <select id="roles" name="roles" multiple required>
-            <option th:each="role : ${allRoles}"
-                    th:value="${role.id}"
-                    th:text="${role.name}">
-            </option>
-        </select><br>
+    <label for="roles">Выберите права доступа:</label>
+    <select id="roles" name="roles" multiple required>
+        <option th:each="role : ${allRoles}"
+                th:value="${role.id}"
+                th:text="${role.name}">
+        </option>
+    </select><br>
 
-        <button type="submit">Создать</button>
-    </form>
+    <button type="submit">Создать</button>
+</form>
 </body>
 </html>

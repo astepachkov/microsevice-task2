@@ -1,8 +1,10 @@
 package com.mycrudapp.controller;
+
 import com.mycrudapp.entity.User;
 import com.mycrudapp.service.RoleService;
 import com.mycrudapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -45,11 +47,22 @@ public class AdminController {
     }
 
     @PostMapping("/add")
-    public String addUser(@ModelAttribute("user") User user, @RequestParam("roles") List<Long> roleIds) {
-        user.setRoles(roleService.getRolesByIds(roleIds));
-        userService.addUser(user);
-        return "redirect:/admin/";
+    public String addUser(@ModelAttribute("user") User user, @RequestParam("roles") List<Long> roleIds, Model model) {
+        try {
+            user.setRoles(roleService.getRolesByIds(roleIds));
+            userService.addUser(user);
+            return "redirect:/admin/";
+        } catch (DataIntegrityViolationException e) {
+            model.addAttribute("errorMessage", "Такой пользователь уже существует");
+            model.addAttribute("allRoles", roleService.getAllRoles());
+            return "admin/new";
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "Ошибка добавления пользователя: " + e.getMessage());
+            model.addAttribute("allRoles", roleService.getAllRoles());
+            return "admin/new";
+        }
     }
+
 
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable int id, Model model) {
@@ -69,11 +82,12 @@ public class AdminController {
 
     @PostMapping("/delete")
     public String deleteUser(@RequestParam("id") int id, RedirectAttributes redirectAttributes) {
-       try { userService.deleteUser(id);
-           redirectAttributes.addFlashAttribute("successMessage", "Пользователь удален");
-       } catch (Exception e) {
-           redirectAttributes.addFlashAttribute("errorMessage", "При удалении пользователя произошла ошибка: " + e.getMessage());
-       }
+        try {
+            userService.deleteUser(id);
+            redirectAttributes.addFlashAttribute("successMessage", "Пользователь удален");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "При удалении пользователя произошла ошибка: " + e.getMessage());
+        }
         return "redirect:/admin/";
     }
 

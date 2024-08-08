@@ -10,7 +10,9 @@ com/mycrudapp/dao/UserDao.class
 com/mycrudapp/dao/UserDaoImpl.class
 com/mycrudapp/controller/LoginController.class
 com/mycrudapp/service/UserServiceImpl.class
+com/mycrudapp/controller/RestApiController.class
 com/mycrudapp/service/RoleService.class
+com/mycrudapp/config/SwaggerConfig.class
 com/mycrudapp/service/CustomUserService.class
 com/mycrudapp/config/DataInitializer.class
 com/mycrudapp/service/UserService.class

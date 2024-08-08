@@ -50,6 +50,9 @@
     </style>
 </head>
 <body>
+<div th:if="${errorMessage}" style="color: red; margin-bottom: 15px;">
+    <p th:text="${errorMessage}"></p>
+</div>
 <h1>Заполните все поля:</h1>
 <form th:action="@{/admin/add}" th:object="${user}" method="post">
     <label for="name">Введите имя:</label>

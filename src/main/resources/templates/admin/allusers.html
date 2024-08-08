@@ -99,9 +99,11 @@
 
 <div class="action-buttons">
     <button onclick="window.location.href='/admin/new'" class="btn btn-primary">Создать нового пользователя</button>
+    <button onclick="window.location.href='/user/profile'" class="btn btn-secondary">Личный профиль</button>
     <form th:action="@{/admin/logout}" method="post" style="display:inline;">
         <button type="submit" class="btn btn-secondary">Выход</button>
     </form>
+
 </div>
 </body>
 </html>

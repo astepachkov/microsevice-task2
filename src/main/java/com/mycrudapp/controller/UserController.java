@@ -46,8 +46,10 @@ public class UserController {
 
     @PostMapping("/update")
     public String updateUserProfile(@ModelAttribute("user") User user) {
-        userService.updateUser(user);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User currentUser = (User) auth.getPrincipal();
+        user.setRoles(currentUser.getRoles());
+        userService.updateUser(user);
         SecurityContextHolder.getContext().setAuthentication(createNewAuth(auth, user));
         return "redirect:/user/profile";
     }
